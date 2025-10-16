@@ -1,0 +1,123 @@
+---
+title: "Big Ten CFB Avg Plays"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+---
+
+**Big Ten Teams Are Running Fewer Plays After NCAA Clock Change**
+
+```{r}
+library(tidyverse)
+library(scales)
+
+CFB24 <- read_csv("https://dwillis.github.io/sports-data-files/footballlogs24.csv")
+CFB25 <- read_csv("https://dwillis.github.io/sports-data-files/footballlogs25.csv")
+
+```
+
+```{r}
+big_ten <- c("Illinois
+", "Indiana", "Iowa", "Maryland", "Michigan", "Michigan State
+", "Minnesota
+", "Nebraska", "Northwestern", "Ohio State", "Penn State", "Purdue", "Rutgers", "Wisconsin")
+
+bigten24 <- CFB24 |> 
+  filter(Opponent%in%big_ten)
+
+bigten25 <- CFB25 |> 
+  filter(Opponent%in%big_ten)
+```
+
+```{r}
+avg_plays_24 <- bigten24 |> 
+  group_by(Opponent) |> 
+  summarise(avg_plays = mean(TotalPlays))
+
+avg_plays_25 <- bigten25 |> 
+  group_by(Opponent) |> 
+  summarise(avg_plays = mean(TotalPlays))
+```
+
+```{r}
+
+ggplot() + 
+  geom_bar(
+    data = avg_plays_24, 
+    aes(
+      x = reorder(Opponent, -avg_plays),
+      weight = avg_plays
+    )) +
+      scale_y_continuous(scales:=comma) + 
+  labs(
+    title = "Average Offensive Plays by Opponent (2024 Season)",
+    x = "Opponent",
+    y = "Average Offensive Plays"
+  ) +
+  theme_minimal() +
+  coord_flip()
+
+
+
+```
+
+```{}
+```
+
+```{r}
+library(scales)
+
+```
+
+```{r}
+ggplot() + 
+  geom_bar(
+    data = avg_plays_24, 
+    aes(
+      x = reorder(Opponent, -avg_plays),
+      weight = avg_plays
+    )) +
+      scale_y_continuous(labels = comma) + 
+  labs(
+    title = "Average Offensive Plays by Opponent (2024 Season)",
+    x = "Opponent",
+    y = "Average Offensive Plays"
+  ) +
+  theme_minimal() +
+  coord_flip()
+
+
+
+
+```
+
+\
+
+```{r}
+ggplot() + 
+  geom_bar(
+    data = avg_plays_25 
+    aes(
+      x = reorder(Opponent, -avg_plays),
+      weight = avg_plays
+    )) +
+      scale_y_continuous(labels = comma) + 
+  labs(
+    title = "Average Offensive Plays by Opponent (2025 Season)",
+    x = "Opponent",
+    y = "Average Offensive Plays"
+  ) +
+  theme_minimal() +
+  coord_flip()
+
+
+```
+
+\
+The data shows that most Big Ten teams are running fewer offensive plays per game in 2025 rather than in 2024, supporting the idea that the NCAA's new timing rule that keeps the clock running after first downs, has shortened possessions. Maryland was the only team that saw a significant increase, most likely reflecting their upbeat offensive style. Overall, the rule change seems to have slightly reduced the pace of plays across the conference.

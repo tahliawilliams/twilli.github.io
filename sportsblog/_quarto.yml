@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: ../twilli.github.io/docs
+
+website:
+  title: "Sports Data Class Blog"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/
+      - icon: twitter
+        href: https://twitter.com
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+
+editor: source
+
+execute: 
+  freeze: auto
+

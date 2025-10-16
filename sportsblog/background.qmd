@@ -1,0 +1,39 @@
+---
+title: "Where Do Students Go At Halfitme"
+author: "Tahlia Williams"
+date: '2025-10-09'
+categories: [lowercaseword, lowercaseword, lowercaseword]
+image: "image.png"
+format: 
+  html:
+    code-fold: true
+---
+
+
+```{r}
+library(tidyverse)
+
+Football_data <- read_csv("https://dwillis.github.io/sports-data-files/footballlogs1124.csv")
+```
+```{r}
+glimpse(Football_data)
+```
+
+Question: How do total penalty yards per game for college football teams correlate with their likelihood of winning, and how do factors like turnovers, opponent strength, or home/away status affect this relationship?
+
+
+Does the data alreadt exist? Can you get it?
+Yes, game by game college football data is avaliable from NCAA Stats, ESPN, and Sports Reference, including penalty yars, points scored, turnovers, and game outcomes
+
+Do you need assistance getting it?
+Potentially if using tables is needed. Otherwise, CSV downloads are avaliable 
+
+Time frame needed: The last five seasons (2019-2025) to capture recent trends
+
+Will you need to improve or augment the data? Yes, I may need to combine multiple sources, and use that to identify penalties, points, and turnovers in columns. 
+
+Other examples: Sports blogs examine pentalties, turnovers, and win probability like Football Outsiders, The Last Man Analytics and The Extra Point. 
+
+
+
+

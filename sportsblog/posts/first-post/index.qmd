@@ -1,0 +1,12 @@
+---
+title: "Where Do Students Go At Halfitme"
+author: "Tahlia Williams"
+date: '2025-10-09'
+categories: [lowercaseword, lowercaseword, lowercaseword]
+image: "image.png"
+format: 
+  html:
+    code-fold: true
+---
+
+It was halftime at SECU Stadium, and the crowd was quiet
