@@ -1,7 +1,0 @@
-"0","avg_plays_24 <- bigten24 |> "
-"0","  group_by(Opponent) |> "
-"0","  summarise(avg_plays = mean(TotalPlays))"
-"0",""
-"0","avg_plays_25 <- bigten25 |> "
-"0","  group_by(Opponent) |> "
-"0","  summarise(avg_plays = mean(TotalPlays))"

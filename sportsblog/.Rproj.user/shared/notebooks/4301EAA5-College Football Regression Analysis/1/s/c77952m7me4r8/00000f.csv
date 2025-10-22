@@ -1,3 +1,0 @@
-"0","logs <- read_csv(""https://dwillis.github.io/sports-data-files/footballlogs1124.csv""q)"
-"2","Error: unexpected symbol in ""logs <- read_csv(""https://dwillis.github.io/sports-data-files/footballlogs1124.csv""q""
-"

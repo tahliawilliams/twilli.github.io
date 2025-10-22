@@ -1,5 +1,0 @@
-"0","library(tidyverse)"
-"0",""
-"0","CFB24 <- read_csv(""https://dwillis.github.io/sports-data-files/footballlogs24.csv"")"
-"0","CFB25 <- read_csv(""https://dwillis.github.io/sports-data-files/footballlogs25.csv"")"
-"0",""
