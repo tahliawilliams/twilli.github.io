@@ -186,7 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction-why-penalties-matter-in-college-football" class="level3">
 <h3 class="anchored" data-anchor-id="introduction-why-penalties-matter-in-college-football">Introduction: Why Penalties Matter in College Football</h3>
-<p>In college football, where games are decided by small margins, penalties can be the difference between a victory and defeat. A costly false start or holding call might stall a drive, while turnovers or opponent strength can further those effects. My analysis explores how total penalty yards per game correlate with a team’s likelihood of winning, and how factors like turnovers, opponent strength, or home/away status influence this relationship. Why should readers care? Penalties aren’t just stats—they’re strategic pitfalls that can cost championships. Understanding them helps coaches, fans, and analysts pinpoint why teams win or lose, especially in an era of increased scrutiny on officiating.</p>
+<p>In college football, where games are decided by small margins, penalties can be the difference between a victory and defeat. A costly false start or holding call might stall a drive, while turnovers or opponent strength can further those effects. My analysis explores how total penalty yards per game correlate with a team’s likelihood of a team winning, and how factors like turnovers, opponent strength, or home/away status influence this relationship. Why should readers care? Penalties aren’t just stats—they’re strategic pitfalls that can cost championships. Understanding them helps coaches, fans, and analysts pinpoint why teams win or lose, especially in an era of increased scrutiny on officiating.</p>
 <p>At first I thought I’d merge attendance data to explore how crowd size influences penalties, but quickly realized the attendance dataset lacked direct ties to penalty stats or game outcomes, so I abandoned that to focus on the core football logs. Similarly, I began scraping multiple stats (e.g., interceptions, yards per point) but dropped incomplete blocks when they didn’t add value, pivoting to key metrics like penalty first downs and turnover margin.</p>
 </section>
 <section id="data-and-methodology" class="level2">
@@ -361,7 +361,7 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
 {
     UseMethod("mutate")
 }
-&lt;bytecode: 0x110740ac8&gt;
+&lt;bytecode: 0x10731d980&gt;
 &lt;environment: namespace:dplyr&gt;</code></pre>
 </div>
 <details class="code-fold">
@@ -374,7 +374,7 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
 {
     UseMethod("mutate")
 }
-&lt;bytecode: 0x110740ac8&gt;
+&lt;bytecode: 0x10731d980&gt;
 &lt;environment: namespace:dplyr&gt;</code></pre>
 </div>
 <details class="code-fold">
@@ -433,9 +433,9 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
 1     1 Penn St         0.6      0.7        1   0.3   1   1.4   
 2     2 Army            0.7      1.3        1   0.5   0.8 1.2   
 3     2 Navy            0.7      1          1   0.5   1   0.9   
-4     4 San Diego St    0.9      1          1   0.3   1.3 2.0   
-5     4 Ohio St         0.9      0.7        2   1.3   0.3 0.9   
-6     6 Rice            0.9      1          2   1     0.8 1.9   </code></pre>
+4     4 Ohio St         0.9      0.7        2   1.3   0.3 0.9   
+5     4 San Diego St    0.9      1          1   0.3   1.3 2.0   
+6     6 Wisconsin       0.9      0.7        1   1.2   0.3 1.7   </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -459,7 +459,7 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
 {
     UseMethod("mutate")
 }
-&lt;bytecode: 0x110740ac8&gt;
+&lt;bytecode: 0x10731d980&gt;
 &lt;environment: namespace:dplyr&gt;</code></pre>
 </div>
 <details class="code-fold">
@@ -473,9 +473,9 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
 1     1 Penn St                   0.6       0.7         1      0.3      1  
 2     2 Army                      0.7       1.3         1      0.5      0.8
 3     2 Navy                      0.7       1           1      0.5      1  
-4     4 San Diego St              0.9       1           1      0.3      1.3
-5     4 Ohio St                   0.9       0.7         2      1.3      0.3
-6     6 Rice                      0.9       1           2      1        0.8
+4     4 Ohio St                   0.9       0.7         2      1.3      0.3
+5     4 San Diego St              0.9       1           1      0.3      1.3
+6     6 Wisconsin                 0.9       0.7         1      1.2      0.3
 # ℹ 1 more variable: pfd_perGame_2024 &lt;chr&gt;</code></pre>
 </div>
 </div>
@@ -545,7 +545,7 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
 {
     UseMethod("mutate")
 }
-&lt;bytecode: 0x110740ac8&gt;
+&lt;bytecode: 0x10731d980&gt;
 &lt;environment: namespace:dplyr&gt;</code></pre>
 </div>
 <details class="code-fold">
@@ -603,11 +603,11 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
    Rank Team          `2025` `Last 3` `Last 1`  Home  Away `2024`
   &lt;int&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
 1     1 Indiana          1.5      1.7        4   1.2   2   +1.0  
-2     2 Southern Miss    1.4      2          3   2     0.7 -1.7  
-3     2 BYU              1.4      1.7        4   1.3   1.5 +0.6  
+2     2 BYU              1.4      1.7        4   1.3   1.5 +0.6  
+3     2 Southern Miss    1.4      2          3   2     0.7 -1.7  
 4     4 Virginia         1.4      2          2   1.5   1.3 -0.4  
-5     5 Alabama          1.3      0.3        0   1.8   0.8 +0.3  
-6     5 UConn            1.3      1          3   2.7   0.4 -0.1  </code></pre>
+5     5 UConn            1.3      1          3   2.7   0.4 -0.1  
+6     5 Temple           1.3      1.7        1   0.8   1.8 -0.8  </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -631,7 +631,7 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
 {
     UseMethod("mutate")
 }
-&lt;bytecode: 0x110740ac8&gt;
+&lt;bytecode: 0x10731d980&gt;
 &lt;environment: namespace:dplyr&gt;</code></pre>
 </div>
 <details class="code-fold">
@@ -643,11 +643,11 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
    Rank Team          pfd_perGame_2025 PFD_Last3 PFD_Last1 PFD_Home PFD_Away
   &lt;int&gt; &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 1     1 Indiana                    1.5       1.7         4      1.2      2  
-2     2 Southern Miss              1.4       2           3      2        0.7
-3     2 BYU                        1.4       1.7         4      1.3      1.5
+2     2 BYU                        1.4       1.7         4      1.3      1.5
+3     2 Southern Miss              1.4       2           3      2        0.7
 4     4 Virginia                   1.4       2           2      1.5      1.3
-5     5 Alabama                    1.3       0.3         0      1.8      0.8
-6     5 UConn                      1.3       1           3      2.7      0.4
+5     5 UConn                      1.3       1           3      2.7      0.4
+6     5 Temple                     1.3       1.7         1      0.8      1.8
 # ℹ 1 more variable: pfd_perGame_2024 &lt;chr&gt;</code></pre>
 </div>
 </div>
@@ -717,7 +717,7 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
 {
     UseMethod("mutate")
 }
-&lt;bytecode: 0x110740ac8&gt;
+&lt;bytecode: 0x10731d980&gt;
 &lt;environment: namespace:dplyr&gt;</code></pre>
 </div>
 <details class="code-fold">
@@ -803,7 +803,7 @@ $ Season            &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 
 {
     UseMethod("mutate")
 }
-&lt;bytecode: 0x110740ac8&gt;
+&lt;bytecode: 0x10731d980&gt;
 &lt;environment: namespace:dplyr&gt;</code></pre>
 </div>
 <details class="code-fold">
