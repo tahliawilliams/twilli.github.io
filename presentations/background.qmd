@@ -1,0 +1,71 @@
+---
+title: "QUESTIONS."
+author: "Tahlia Williams"
+date: '2025-10-09'
+categories: [lowercaseword, lowercaseword, lowercaseword]
+image: "image.png"
+format: 
+  html:
+    code-fold: true
+---
+
+
+```{r}
+library(tidyverse)
+
+Football_data <- read_csv("https://dwillis.github.io/sports-data-files/footballlogs1124.csv")
+```
+```{r}
+glimpse(Football_data)
+```
+
+Question: How do total penalty yards per game for college football teams correlate with their likelihood of winning, and how do factors like turnovers, opponent strength, or home/away status affect this relationship?
+
+
+Does the data alreadt exist? Can you get it?
+Yes, game by game college football data is avaliable from NCAA Stats, ESPN, and Sports Reference, including penalty yars, points scored, turnovers, and game outcomes
+
+Do you need assistance getting it?
+Potentially if using tables is needed. Otherwise, CSV downloads are avaliable 
+
+Time frame needed: The last five seasons (2019-2025) to capture recent trends
+
+Will you need to improve or augment the data? Yes, I may need to combine multiple sources, and use that to identify penalties, points, and turnovers in columns. 
+
+Other examples: Sports blogs examine penalties, turnovers, and win probability like Football Outsiders, The Last Man Analytics and The Extra Point. 
+
+```{r}
+Football_data |> 
+  group_by(Opponent) |> 
+summarise(Game = n()) |>
+  arrange(desc(Game))
+            
+```
+
+
+
+```{r}
+Football_data |> 
+  group_by(Outcome) |> 
+  summarise(Game = n())
+```
+
+```{r}
+Football_data |> 
+  ggplot(aes(x = Outcome, fill = Outcome)) +
+  geom_bar() +
+  labs(title = "Distribution of Game Outcomes",
+       x = "Outcome",
+       y = "Number of Games") +
+  theme_minimal()
+
+```
+
+A challenge I encountered is that the dataset doesn't include consistent formatting and is missing thr values for team names and other stats. Additionally, because the data is only data from games, I may need to merge it with another data set to answer a broader question. 
+
+```{r}
+library(tidyverse)
+
+attendance <- read_csv("https://dwillis.github.io/sports-data-files/attendance.csv")
+```
+

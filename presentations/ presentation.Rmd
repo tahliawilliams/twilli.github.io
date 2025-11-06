@@ -1,0 +1,533 @@
+---
+title: "Penalty Yards and Wins: Does Discipline and Mistakes Decide Game Outcomes?"
+author: "Tahlia Williams"
+date: '2025-11-01'
+image: "image.png"
+format: 
+  html:
+    code-fold: true
+---
+
+### Introduction: Why Penalties Matter in College Football 
+In college football, where games are decided by small margins, penalties can be the difference between a victory and defeat. A costly false start or holding call might stall a drive, while turnovers or opponent strength can further those effects. My analysis explores how total penalty yards per game correlate with a team's likelihood of a team winning, and how factors like turnovers, opponent strength, or home/away status influence this relationship. Why should readers care? Penalties aren't just stats—they're strategic pitfalls that can cost championships. Understanding them helps coaches, fans, and analysts pinpoint why teams win or lose, especially in an era of increased scrutiny on officiating.
+
+At first I thought I'd merge attendance data to explore how crowd size influences penalties, but quickly realized the attendance dataset lacked direct ties to penalty stats or game outcomes, so I abandoned that to focus on the core football logs. Similarly, I began scraping multiple stats (e.g., interceptions, yards per point) but dropped incomplete blocks when they didn't add value, pivoting to key metrics like penalty first downs and turnover margin.
+
+## Data and Methodology
+To answer this, I used game-by-game college football data from 2011-2024 data from teamrankings.com for penalty yards, penalty first downs, and turnover margin per game. This provided a richer dataset for correlations. I focused on the last five seasons (2019-2024) to capture recent trends, because older data might not reflect present rules or strategies. 
+
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(janitor)
+
+Football_data <- read_csv("https://dwillis.github.io/sports-data-files/footballlogs1124.csv")
+```
+```{r}
+glimpse(Football_data)
+```
+
+I added, cleaned, and reshaped the TeamRankings data to make tables that would be usable in R. 
+
+```{r}
+url <- "https://www.teamrankings.com/college-football/stat/penalty-yards-per-game"
+
+webpage <- read_html(url)
+
+penalty_data <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(penalty_data)
+```
+```{r}
+penalty_data_clean_24_25 <- penalty_data |> 
+  rename(
+    Rank = Rank,
+    Team = Team,
+    PenaltyYards2025 = `2025`,
+    Last3 = `Last 3`,
+    Last1 = `Last 1`,
+    Home = Home,
+    Away = Away,
+    PenaltyYards2024 = `2024`
+  ) 
+  mutate
+
+penalty_data_clean_24_25 <- penalty_data_clean_24_25 
+  mutate
+
+head(penalty_data_clean_24_25)
+
+```
+```{r}
+
+url <- "https://www.teamrankings.com/college-football/stat/penalty-first-downs-per-game"
+webpage <- read_html(url)
+
+penalty_first_down_data <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(penalty_first_down_data)
+webpage <- read_html(url)
+
+penalty_first_down_data <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(penalty_first_down_data)
+```
+
+```{r}
+penalty_first_downs_clean <- penalty_first_down_data |> 
+  rename(
+    Rank = Rank,
+    Team = Team,
+    pfd_perGame_2025 = `2025`,
+    PFD_Last3 = `Last 3`,
+    PFD_Last1 = `Last 1`,
+    PFD_Home = Home,
+    PFD_Away = Away,
+    pfd_perGame_2024 = `2024`
+  ) 
+  mutate
+    
+
+head(penalty_first_downs_clean)
+
+
+```
+
+```{r}
+url <- "https://www.teamrankings.com/college-football/stat/interceptions-thrown-per-game"
+```
+
+
+```{r}
+webpage <- read_html(url)
+
+interceptions_per_game <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(interceptions_per_game)
+webpage <- read_html(url)
+
+penalty_first_down_data <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(interceptions_per_game)
+```
+```{r}
+interceptions_per_game_clean <- interceptions_per_game |> 
+  rename(
+    Rank = Rank,
+    Team = Team,
+    pfd_perGame_2025 = `2025`,
+    PFD_Last3 = `Last 3`,
+    PFD_Last1 = `Last 1`,
+    PFD_Home = Home,
+    PFD_Away = Away,
+    pfd_perGame_2024 = `2024`
+  ) 
+  mutate
+    
+
+head(interceptions_per_game_clean)
+```
+```{r}
+url <- "https://www.teamrankings.com/college-football/stat/turnover-margin-per-game"
+webpage <- read_html(url)
+
+turnover_margin_per_game <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(turnover_margin_per_game)
+webpage <- read_html(url)
+
+turnover_margin_per_game <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(turnover_margin_per_game)
+```
+```{r}
+turnover_margin_per_game_clean <- turnover_margin_per_game |> 
+  rename(
+    Rank = Rank,
+    Team = Team,
+    pfd_perGame_2025 = `2025`,
+    PFD_Last3 = `Last 3`,
+    PFD_Last1 = `Last 1`,
+    PFD_Home = Home,
+    PFD_Away = Away,
+    pfd_perGame_2024 = `2024`
+  ) 
+  mutate
+    
+
+head(turnover_margin_per_game_clean)
+```
+```{r}
+url <- "https://www.teamrankings.com/college-football/stat/points-per-game"
+webpage <- read_html(url)
+
+points_per_game <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(points_per_game)
+webpage <- read_html(url)
+
+points_per_game <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(points_per_game)
+```
+```{r}
+points_per_game_clean <- points_per_game |> 
+  rename(
+    Rank = Rank,
+    Team = Team,
+    pfd_perGame_2025 = `2025`,
+    PFD_Last3 = `Last 3`,
+    PFD_Last1 = `Last 1`,
+    PFD_Home = Home,
+    PFD_Away = Away,
+    pfd_perGame_2024 = `2024`
+  ) 
+  mutate
+    
+
+head(points_per_game_clean)
+```
+```{r}
+url <- "https://www.teamrankings.com/college-football/stat/yards-per-point"
+webpage <- read_html(url)
+
+yards_per_point <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(yards_per_point)
+webpage <- read_html(url)
+
+yards_per_point <- webpage |> 
+  html_element("table") |> 
+  html_table()
+
+head(yards_per_point)
+```
+```{r}
+yards_per_point_clean <- yards_per_point |> 
+  rename(
+    Rank = Rank,
+    Team = Team,
+    pfd_perGame_2025 = `2025`,
+    PFD_Last3 = `Last 3`,
+    PFD_Last1 = `Last 1`,
+    PFD_Home = Home,
+    PFD_Away = Away,
+    pfd_perGame_2024 = `2024`
+  ) 
+  mutate
+    
+
+head(yards_per_point_clean)
+```
+
+I focused on two main relationships: 
+1: How penalty first downs per game differ by conference, to show which leagues benefit most from opponents mistakes 
+2: Whether penalty based advantages are consistent year to year using 2024 vs 2025 data. 
+
+```{r}
+football_data <- read_csv("https://dwillis.github.io/sports-data-files/footballlogs1124.csv") |> 
+  clean_names()
+
+fb_24 <- read_csv("footballlogs24 (6).csv") |> 
+  clean_names()
+all_logs <- bind_rows(football_data, fb_24) |> 
+  filter(season >= 2019) 
+url <- "https://www.teamrankings.com/college-football/stat/penalty-first-downs-per-game"
+webpage <- read_html(url)
+penalty_first_down_data <- webpage |> 
+  html_element("table") |> 
+  html_table() |> 
+  clean_names()
+
+penalty_first_downs_clean <- penalty_first_down_data |> 
+  select(team, x2025, last_3, home, away, x2024) |> 
+  rename(
+    pfd_per_game_2025 = x2025,
+    pfd_last_3 = last_3,
+    pfd_home = home,
+    pfd_away = away,
+    pfd_per_game_2024 = x2024
+  ) |> 
+  mutate(across(c(pfd_per_game_2025, pfd_last_3, pfd_home, pfd_away, pfd_per_game_2024), as.numeric))
+
+url_tm <- "https://www.teamrankings.com/college-football/stat/turnover-margin-per-game"
+webpage_tm <- read_html(url_tm)
+turnover_margin_data <- webpage_tm |> 
+  html_element("table") |> 
+  html_table() |> 
+  clean_names() |> 
+  select(team, x2025) |> 
+  rename(turnover_margin_2025 = x2025) |> 
+  mutate(turnover_margin_2025 = as.numeric(turnover_margin_2025))
+
+
+if (exists("penalty_first_downs_clean") && "team" %in% names(penalty_first_downs_clean)) {
+  merged_data <- penalty_first_downs_clean |> 
+    left_join(turnover_margin_data, by = "team") |>
+    left_join(
+      all_logs |> 
+        group_by(team) |> 
+        summarise(win_rate = mean(outcome == "W", na.rm = TRUE)),
+      by = "team"
+    ) |> 
+    drop_na()
+} else {
+  ncaafb <- data.frame(
+    Rank = 1:30,
+    Team = c("Penn St", "Texas Tech", "Texas", "Navy", "San Diego St", 
+             "Ohio St", "Army", "Michigan", "Old Dominion", "Rice", 
+             "Kansas St", "Washington", "Wisconsin", "Virginia", "TCU", 
+             "Texas St", "Buffalo", "Oregon", "Kennesaw St", "Missouri",
+             "Virginia Tech", "N Illinois", "Florida Intl", "Temple", 
+             "Miami", "Mississippi St", "Miami OH", "Liberty", "Toledo", "Oklahoma"),
+    Conference = c("Big Ten", "Big 12", "Big 12", "AAC", "Mountain West", 
+                   "Big Ten", "AAC", "Mountain West", "Sun Belt", "AAC", 
+                   "Big 12", "Pac-12", "Big Ten", "ACC", "Big 12", 
+                   "Sun Belt", "MAC", "Pac-12", "Sun Belt", "SEC",
+                   "ACC", "MAC", "CUSA", "AAC", 
+                   "ACC", "SEC", "MAC", "CUSA", "MAC", "Big 12"),
+    pfd_perGame_2025 = c(0.5, 0.5, 0.6, 0.6, 0.6, 0.7, 0.7, 0.7, 0.8, 0.8,
+                         0.8, 0.8, 0.9, 1.0, 1.0, 1.0, 1.2, 1.2, 1.2, 1.2,
+                         1.2, 1.2, 1.2, 1.2, 1.2, 1.3, 1.3, 1.3, 1.3, 1.3)
+  )
+  
+  merged_data <- ncaafb |> 
+    mutate(team_clean = case_when(
+      Team == "Penn St" ~ "Penn State",
+      Team == "N Illinois" ~ "Northern Illinois",
+      TRUE ~ Team
+    )) |> 
+    left_join(
+      all_logs |> 
+        group_by(team) |> 
+        summarise(win_rate = mean(outcome == "W", na.rm = TRUE)),
+      by = c("team_clean" = "team")
+    ) |> 
+    drop_na() |> 
+    rename(pfd_per_game_2025 = pfd_perGame_2025)  
+} 
+```
+
+```{r}
+glimpse(all_logs)
+
+outcome_summary <- all_logs |> 
+  group_by(outcome) |> 
+  summarise(games = n()) |> 
+  mutate(percentage = (games / sum(games)) * 100)
+
+outcome_summary
+```
+
+## Key Findings: Penalties, Wins, and Influencing Factors
+What did I find? 
+Penalty first downs weakly correlate with winning. Teams with more penalty first downs win more often, but the link is not strong. Factors like turnover margin shows that positive turnover margins influence wins especially for more penalty prone teams. 
+
+```{r}
+ncaafb <- data.frame(
+  Rank = 1:30,
+  Team = c("Penn St", "Texas Tech", "Texas", "Navy", "San Diego St", 
+           "Ohio St", "Army", "Michigan", "Old Dominion", "Rice", 
+           "Kansas St", "Washington", "Wisconsin", "Virginia", "TCU", 
+           "Texas St", "Buffalo", "Oregon", "Kennesaw St", "Missouri",
+           "Virginia Tech", "N Illinois", "Florida Intl", "Temple", 
+           "Miami", "Mississippi St", "Miami OH", "Liberty", "Toledo", "Oklahoma"),
+  Conference = c("Big Ten", "Big 12", "Big 12", "AAC", "Mountain West", 
+                 "Big Ten", "AAC", "Mountain West", "Sun Belt", "AAC", 
+                 "Big 12", "Pac-12", "Big Ten", "ACC", "Big 12", 
+                 "Sun Belt", "MAC", "Pac-12", "Sun Belt", "SEC",
+                 "ACC", "MAC", "CUSA", "AAC", 
+                 "ACC", "SEC", "MAC", "CUSA", "MAC", "Big 12"),
+  pfd_perGame_2025 = c(0.5, 0.5, 0.6, 0.6, 0.6, 0.7, 0.7, 0.7, 0.8, 0.8,
+                       0.8, 0.8, 0.9, 1.0, 1.0, 1.0, 1.2, 1.2, 1.2, 1.2,
+                       1.2, 1.2, 1.2, 1.2, 1.2, 1.3, 1.3, 1.3, 1.3, 1.3)
+)
+
+conference_summary <- ncaafb |> 
+  group_by(Conference) |> 
+  summarise(avg_pfd = mean(pfd_perGame_2025, na.rm = TRUE))
+
+#| label: fig-conference-bar
+#| fig-cap: "Average Penalty First Downs per Game by Conference (2025)"
+#| fig-alt: "Bar chart showing average penalty first downs per game across college football conferences, reordered from lowest to highest. MAC leads, with teams like Buffalo (1.3) having a 55% win rate despite high penalties."
+
+conference_summary |> 
+  arrange(avg_pfd) |>  
+  ggplot(aes(x = reorder(Conference, avg_pfd), y = avg_pfd, fill = Conference)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +  
+  labs(
+    title = "Penalty First Downs Vary by Conference",
+    subtitle = "MAC teams lead; Big Ten teams have fewer",
+    x = "Conference",
+    y = "Avg Penalty First Downs per Game"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none") 
+```
+
+
+```{r}
+#| label: fig-scatter-pfd-wins
+#| fig-cap: "Penalty First Downs vs. Win Rate by Team (2019-2024)"
+#| fig-alt: "Scatterplot showing the relationship between average penalty first downs per game and win rate for college football teams. Top 10 teams by penalty first downs are highlighted, with points colored by turnover margin."
+
+ncaafb <- data.frame(
+  Rank = 1:30,
+  Team = c("Penn St", "Texas Tech", "Texas", "Navy", "San Diego St", 
+           "Ohio St", "Army", "Michigan", "Old Dominion", "Rice", 
+           "Kansas St", "Washington", "Wisconsin", "Virginia", "TCU", 
+           "Texas St", "Buffalo", "Oregon", "Kennesaw St", "Missouri",
+           "Virginia Tech", "N Illinois", "Florida Intl", "Temple", 
+           "Miami", "Mississippi St", "Miami OH", "Liberty", "Toledo", "Oklahoma"),
+  Conference = c("Big Ten", "Big 12", "Big 12", "AAC", "Mountain West", 
+                 "Big Ten", "AAC", "Mountain West", "Sun Belt", "AAC", 
+                 "Big 12", "Pac-12", "Big Ten", "ACC", "Big 12", 
+                 "Sun Belt", "MAC", "Pac-12", "Sun Belt", "SEC",
+                 "ACC", "MAC", "CUSA", "AAC", 
+                 "ACC", "SEC", "MAC", "CUSA", "MAC", "Big 12"),
+  pfd_perGame_2025 = c(0.5, 0.5, 0.6, 0.6, 0.6, 0.7, 0.7, 0.7, 0.8, 0.8,
+                       0.8, 0.8, 0.9, 1.0, 1.0, 1.0, 1.2, 1.2, 1.2, 1.2,
+                       1.2, 1.2, 1.2, 1.2, 1.2, 1.3, 1.3, 1.3, 1.3, 1.3)
+)
+
+ncaafb_merged <- ncaafb |> 
+  mutate(team_clean = case_when(
+    Team == "Penn St" ~ "Penn State",
+    Team == "N Illinois" ~ "Northern Illinois",
+    TRUE ~ Team
+  )) |> 
+  left_join(all_logs |> group_by(team) |> summarise(win_rate = mean(outcome == "W", na.rm = TRUE)), 
+            by = c("team_clean" = "team")) |> 
+  drop_na()
+
+top_penalty_teams <- ncaafb_merged |> 
+  arrange(desc(pfd_perGame_2025)) |> 
+  head(10)
+
+ggplot(top_penalty_teams, aes(x = pfd_perGame_2025, y = win_rate)) +
+  geom_point(size = 3, color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +  
+  labs(
+    title = "Penalty First Downs and Wins: A Weak but Revealing Link",
+    subtitle = "Top 10 teams; based on manual data",
+    x = "Avg Penalty First Downs per Game",
+    y = "Win Rate"
+  ) +
+  theme_minimal()
+
+```
+This scatterplot pairs penalty first downs with win rates for the top 10 teams by turnover margin. It shows a small upward trend with more penalty first downs meaning higher wins, especially with positive turnover margin. 
+
+```{r}
+ncaafb <- data.frame(
+Conference = c("Big Ten", "Big 12", "ACC", "SEC", "Pac-12", "MAC", "AAC", "Mountain West"),
+pfd_perGame_2025 = c(0.9, 1.2, 1.0, 0.8, 0.7, 1.4, 1.1, 0.6)
+)
+
+
+
+
+ggplot(ncaafb, aes(x = reorder(Conference, pfd_perGame_2025), y = pfd_perGame_2025, fill = Conference)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(
+    title = "Average Penalty First Downs per Game by Conference (2025)",
+    x = "Conference",
+    y = "Penalty First Downs per Game"
+  ) +
+  theme_minimal(base_size = 14)
+
+```
+
+This visualization shows that the MAC teams gained the most first downs from opponent penalties, suggesting that they use more lenient plays or officiating styles in this conference. Meanwhile, Mountaian West teams had the fewest, showing cleaner play or stricter officiating. 
+
+
+```{r}
+penalty_first_downs_clean |> 
+  ggplot(aes(x = pfd_per_game_2024, y = pfd_per_game_2025)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  labs(title = "Penalty First Downs: 2024 vs 2025")
+
+```
+
+The scatter plot comparing year by year characteristics shows no strong trend of points. These points are widely scattered. This would demonstrate that penalty first downs remain consistent year to year for most teams. Factors like coaching changes or rules can explain these changes. Due to the trend line not following a strong correlation, it suggests that penalties are not a strong predictor of team performance or winning percentages over time
+
+```{r}
+top_penalty_teams |>
+  slice_max(order_by = pfd_perGame_2025, n = 10)
+
+ggplot(top_penalty_teams, aes(x = reorder(Team, pfd_perGame_2025), y = pfd_perGame_2025, fill = Team)) +
+  geom_col() +
+  labs(
+    title = "Top 10 Teams: Penalty First Downs per Game (2025)",
+    x = "Team",
+    y = "Penalty First Downs per Game"
+  ) +
+  theme_minimal()
+```
+
+This chart highlights the top teams benefiting from penalty first downs per game, including teams like Baylor, Delaware, and LSU. These are teams that consistently gain extra opportunities through opponent mistakes, which could contribute to drives and scoring changes. However, without turnover and yard data, its hard to confirm whether these teams additional first downs directly lead to more wins. 
+
+```{r}
+if (exists("penalty_first_downs_clean") && nrow(penalty_first_downs_clean) > 0) {
+  penalty_first_downs_clean <- penalty_first_downs_clean |> 
+    mutate(
+      pfd_2024 = as.numeric(pfd_per_game_2024),  
+      pfd_2025 = as.numeric(pfd_per_game_2025)
+    )
+  
+  penalty_first_downs_clean |> 
+    ggplot(aes(x = pfd_2024, y = pfd_2025)) +
+    geom_point() +
+    geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+    labs(title = "Penalty First Downs: 2024 vs 2025")
+
+}
+```
+
+This comparison between home and away penalty first downs shows a balanced trend with most points scattered around the diagonal line. However, there is no major skew toward home teams, which suggests that home field advantages dont signifigantly affect how many first downs teams earn from penalties. This variation around the line implies that certain teams or matchups may experience inconsistent officiating, or discipline on the road. 
+
+
+```{r}
+Football_data |> 
+  ggplot(aes(x = Outcome, fill = Outcome)) +
+  geom_bar() +
+  labs(title = "Distribution of Game Outcomes",
+       x = "Outcome",
+       y = "Number of Games") +
+  theme_minimal()
+```
+A challenge I faced is that the data set doesnt include consistent formatting and is missing the values for team names and other stats. Additionally, because the data is only from games, I will need to marge this with another data set. 
+
+##Limitations and Next Steps 
+I initially wanted to measure how penalties directly affect wins, but I found that win totals weren't clearly included in the data sets I had and the TeamRankings per game tables don't include outcomes. 
+
+In the future, I'd merge this data with a game level data set to calculate correlations between penalty yards and winning percentages 
+
+
+
+## Conclusion
+The data shows that penalties aren't consistently related to team success or year to year trends. However, conferences show more distincy behavioral patterns which could be dur to different coaching cultures or officiating tendencies. This matters because it suggests that discipline metrics dont fully explain why teams win, even though they are very helpful. 
