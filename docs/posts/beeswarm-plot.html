@@ -9,7 +9,7 @@
 <meta name="author" content="Tahlia Williams">
 <meta name="dcterms.date" content="2025-11-06">
 
-<title>Redzone Efficiency in the NFL: Which Teams Are Improving or Declining? – Sports Data Class Blog</title>
+<title>Experience Over Everything: Does Seasoned Shooting Set Players Apart? – Sports Data Class Blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -149,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Redzone Efficiency in the NFL: Which Teams Are Improving or Declining?</h1>
+      <h1 class="title">Experience Over Everything: Does Seasoned Shooting Set Players Apart?</h1>
                       </div>
   </div>
     
@@ -185,10 +185,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="replicating-espns-redzone-success-analysis-in-the-nfl" class="level2">
-<h2 class="anchored" data-anchor-id="replicating-espns-redzone-success-analysis-in-the-nfl">Replicating ESPN’s Redzone Success Analysis in the NFL</h2>
-<p>Redzone performance often determines how successful an NFL offense can be. Teams that convert redzone appearances into touchdowns maximize scoring opportunities , while those that stall leave points on the field. Inspired by an ESPN analysis of redzone success, this code will use expected points added (EPA) to measure how effectively teams perform inside the 20 yard line.</p>
-<p>We’ll focus on the 2022 NFL season, comparing each team’s redzone EPA through the first three weeks and through the first nine weeks to see which offenses improved, and which regressed as the season progressed.</p>
+<section id="maryland-mens-soccer-the-experience-edge-in-scoring" class="level2">
+<h2 class="anchored" data-anchor-id="maryland-mens-soccer-the-experience-edge-in-scoring">Maryland Men’s Soccer: The Experience Edge in Scoring</h2>
+<p>Maryland’s men’s soccer team this season, has been a powerhouse in college soccer, ranking in the nation’s top programs. One key factor they are known for, is the depth of their roster. In this post, we’ll explore how Maryland’s players stack up in terms of scoring efficiency, focusing on goals scored, and compare them to the broader NCAA Division I league. Using data from the 2025 season, we can visualize the distribution of goals by player year across all D-I teams, and focus on Maryland and Virginia to see how experience translates to offensive output.</p>
+</section>
+<section id="data-and-methodology" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-methodology">Data and Methodology</h2>
+<p>I pulled player statistics from the NCAA men’s soccer dataset from the 2025 season. In order to focus in active and impactful platers, I filtered for players with atleast one shot on goal. For the plot, I placed goals schored on the y axis, because it directly measures offensive contribution of goals by player, allowing us to see clustering and outliers.</p>
+<p>Maryland’s players in red for emphasis, with Virginia added, who is also a top program, in blue to provide context.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -208,136 +212,115 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nflreadr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pbp_2022 <span class="ot">&lt;-</span> nflreadr<span class="sc">::</span><span class="fu">load_pbp</span>(<span class="dv">2022</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>According to ESPN’s story, Miami had 20 redzone plays during the first three weeks of the 2022 season with a total EPA of 9.0</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>miami_redzone_week3 <span class="ot">&lt;-</span> pbp_2022 <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(posteam <span class="sc">==</span> <span class="st">"MIA"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>play_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"run"</span>, <span class="st">"pass"</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>yardline_100 <span class="sc">&lt;=</span> <span class="dv">20</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>week <span class="sc">&lt;=</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">total_plays =</span> <span class="fu">n</span>(),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">total_epa =</span> <span class="fu">sum</span>(epa)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(miami_redzone_week3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
-  total_plays total_epa
-        &lt;int&gt;     &lt;dbl&gt;
-1          20      9.00</code></pre>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>miami_redzone_week9 <span class="ot">&lt;-</span> pbp_2022 <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(posteam <span class="sc">==</span> <span class="st">"MIA"</span>, play_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'run'</span>, <span class="st">'pass'</span>), yardline_100 <span class="sc">&lt;</span> <span class="dv">21</span>, week <span class="sc">&lt;</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> <span class="fu">group_by</span>(posteam) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">plays_week9 =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Now, we’ll look at how the Dolphins’ redzone efficiency changed over the 2022 season.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>miami_redzone_full <span class="ot">&lt;-</span> pbp_2022 <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(posteam <span class="sc">==</span> <span class="st">"MIA"</span>, yardline_100 <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="sc">!</span><span class="fu">is.na</span>(epa)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">plays =</span> <span class="fu">n</span>(), <span class="at">total_epa =</span> <span class="fu">sum</span>(epa))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(miami_redzone_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
-  plays total_epa
-  &lt;int&gt;     &lt;dbl&gt;
-1   207      7.68</code></pre>
-</div>
-</div>
-<p>Miami had about 207 redzone plays in 2022 with a total EPA of around 7.68. Compared to 20 in weeks 3 and 9, their ERA per play was strong but dipped later showing inconsistency</p>
-<p>Below we are creating data frames for all NFL teams in 2022. One for the first 3 weeks, one for the first 9 weeks, with columns for number of plays and total EPA.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>teams_week3 <span class="ot">&lt;-</span> pbp_2022 <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(week <span class="sc">&lt;=</span> <span class="dv">3</span>, yardline_100 <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="sc">!</span><span class="fu">is.na</span>(epa)) <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(posteam) <span class="sc">|&gt;</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">plays_week3 =</span> <span class="fu">n</span>(), <span class="at">epa_week3 =</span> <span class="fu">sum</span>(epa))</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>teams_week9 <span class="ot">&lt;-</span> pbp_2022 <span class="sc">|&gt;</span> </span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(week <span class="sc">&lt;=</span> <span class="dv">9</span>, yardline_100 <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="sc">!</span><span class="fu">is.na</span>(epa)) <span class="sc">|&gt;</span> </span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(posteam) <span class="sc">|&gt;</span> </span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">plays_week9 =</span> <span class="fu">n</span>(), <span class="at">epa_week9 =</span> <span class="fu">sum</span>(epa))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>We’re going to now join both datasets to compare each team’s early and midseason redzone performance</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>teams_combined <span class="ot">&lt;-</span> teams_week3 <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(teams_week9, <span class="at">by =</span> <span class="st">"posteam"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>teams_combined <span class="ot">&lt;-</span> teams_combined <span class="sc">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(epa_week9))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>A dumbbell chart makes it easy to visualize how each team’s total EPA inside the redzone changed from week 3 to week 9.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>Registered S3 methods overwritten by 'ggalt':
-  method                  from   
-  grid.draw.absoluteGrob  ggplot2
-  grobHeight.absoluteGrob ggplot2
-  grobWidth.absoluteGrob  ggplot2
-  grobX.absoluteGrob      ggplot2
-  grobY.absoluteGrob      ggplot2</code></pre>
+<pre><code>
+Attaching package: 'janitor'
+
+The following objects are masked from 'package:stats':
+
+    chisq.test, fisher.test</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>teams_combined <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dumbbell</span>(</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> epa_week3, <span class="at">xend =</span> epa_week9, <span class="at">y =</span> <span class="fu">reorder</span>(posteam, epa_week9)),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"grey"</span>,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_x =</span> <span class="st">"green"</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_xend =</span> <span class="st">"blue"</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"NFL Teams' Redzone EPA: Weeks 1-3 vs. Weeks 1-9 (2022)"</span>,</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Green dots represent EPA through week 3; blue dots through week 9. Ordered by highest week 9 EPA."</span>,</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Total EPA"</span>,</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Team"</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>players <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/dwillis/NCAAWomensSoccerData/refs/heads/main/data/ncaa_mens_soccer_playerstats_2025.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using the `size` aesthetic with geom_segment was deprecated in ggplot2 3.4.0.
-ℹ Please use the `linewidth` aesthetic instead.</code></pre>
+<pre><code>Rows: 5250 Columns: 24
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (7): team, full_name, roster_name, first_name, last_name, yr, pos
+dbl (16): season, team_id, number, ht, gp, gs, goals, assists, sh_att, so_g,...
+lgl  (1): corners
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>active_scorers <span class="ot">&lt;-</span> players <span class="sc">|&gt;</span> <span class="fu">filter</span>(so_g <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>maryland <span class="ot">&lt;-</span> active_scorers <span class="sc">|&gt;</span> <span class="fu">filter</span>(team <span class="sc">==</span> <span class="st">"Maryland Terrapins, Terps"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>shooters <span class="ot">&lt;-</span> active_scorers <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(so_g <span class="sc">&gt;=</span> <span class="dv">5</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>virginia <span class="ot">&lt;-</span> active_scorers <span class="sc">|&gt;</span> <span class="fu">filter</span>(team <span class="sc">==</span> <span class="st">"Virginia Cavaliers"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(active_scorers, <span class="fu">aes</span>(<span class="at">x =</span> yr, <span class="at">y =</span> so_g)) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_beeswarm</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Shots on Goal by Player Year"</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"NCAA Division I Men's Soccer, 2025 Season"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Player Year"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Shots on Goal"</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="nfl-redzone-epa-reverse-engineering_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="beeswarm-plot_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="findings-and-takeaways" class="level2">
-<h2 class="anchored" data-anchor-id="findings-and-takeaways">Findings and Takeaways</h2>
-<p>This chart compares each NFL team’s redzone EPA added through the first three weeks of the 2022 season (green) to their total EPA through nine weeks (blue). Teams toward the top, such as Kansas City, Philadelphia, and Tennessee, maintained high redzone efficiency throughout the first hald of the season. Their consistent ability to convert scoring opportunities into points helped drive their overall offensive success.</p>
-<p>On the other hand, teams like Denver, Buffano, and Tampa Bay had their redzone production stalled, ranking among the lowest in total EPA by week 9. Denver, started poorly and showed no improvement, infact their had declined, reflecting their offensive struggles this year.</p>
-<p>A few teams like Baltimore and Cincinnati improved signifigantly between weeks 3 and 9, suggesting that adjustments to play calling or execution began to pay off midseason.</p>
-<p>Overall, this analysis shows how early redzone performance can signal offensive rhythm, but it also highlights the teams can build or lose efficiency as defenses adapt and improve over time.</p>
+<section id="shot-totals-show-no-clear-link-to-experience" class="level2">
+<h2 class="anchored" data-anchor-id="shot-totals-show-no-clear-link-to-experience">Shot Totals Show No Clear Link to Experience</h2>
+<p>The graph shows that shots on goal are fairly evently distributed among freshman, sohpmores, juniors, and seniors during the 2025 NCAA Division I Men’s Soccer season. While most players record fewer than 10 shots, outliers in each c;ass take a higher number of shots, representing top offensive players. However, there doesn’t appear to be a clear correlation between player year and shot volume.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_beeswarm</span>(<span class="at">data =</span> active_scorers, <span class="fu">aes</span>(<span class="at">x =</span> yr, <span class="at">y =</span> goals), <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_beeswarm</span>(<span class="at">data =</span> maryland, <span class="fu">aes</span>(<span class="at">x =</span> yr, <span class="at">y =</span> goals), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_beeswarm</span>(<span class="at">data =</span> virginia, <span class="fu">aes</span>(<span class="at">x =</span> yr, <span class="at">y =</span> goals), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> maryland, <span class="fu">aes</span>(<span class="at">x =</span> yr, <span class="at">y =</span> goals, <span class="at">label =</span> full_name), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> virginia, <span class="fu">aes</span>(<span class="at">x =</span> yr, <span class="at">y =</span> goals, <span class="at">label =</span> full_name), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Goals Scored by Player Year in NCAA D-I Men's Soccer (2025)"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Maryland (red) and Virginia (blue) highlighted"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Player Year"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Goals Scored"</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1418 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 5 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing missing values or values outside the scale range
+(`geom_text_repel()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 5 rows containing missing values or values outside the scale range
+(`geom_text_repel()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="beeswarm-plot_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-beeswarm-plot-experience-and-goals" class="level2">
+<h2 class="anchored" data-anchor-id="the-beeswarm-plot-experience-and-goals">The Beeswarm Plot: Experience and Goals</h2>
+<p>This chart shows that goal scoring in NCAA Division I Men’s Soccer is concentrated among a few standout players, regardless of class year. Maryland’s leading scorers, highlighted in red, tend to be upperclassmen, while Virginia’s, shown in blue, are more evently distributed across player years. However, both programs have several players contributing between four and eight goals.</p>
 
 
 </section>
