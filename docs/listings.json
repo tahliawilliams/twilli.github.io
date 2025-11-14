@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/facet-wraps.html",
       "/posts/beeswarm-plot.html",
       "/posts/nfl-redzone-epa-reverse-engineering.html",
       "/posts/maryland-football-yyp.html",
