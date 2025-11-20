@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/early-season-analysis.html",
       "/posts/facet-wraps.html",
       "/posts/beeswarm-plot.html",
       "/posts/nfl-redzone-epa-reverse-engineering.html",
